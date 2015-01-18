@@ -307,9 +307,9 @@ namespace SceneEditor
         private void trackBarLight_Scroll(object sender, EventArgs e)
         {
             float tmp = (1.0f / trackBarLight.Maximum) * Convert.ToSingle(trackBarLight.Value);
-            light.AmbiantIntensity.X = 0.2f * tmp;
-            light.AmbiantIntensity.Y = 0.2f * tmp;
-            light.AmbiantIntensity.Z = 0.2f * tmp;
+            light.AmbiantIntensity.X = 0.5f * tmp;
+            light.AmbiantIntensity.Y = 0.5f * tmp;
+            light.AmbiantIntensity.Z = 0.5f * tmp;
             light.DiffuseIntensity.X = 1.0f * tmp;
             light.DiffuseIntensity.Y = 1.0f * tmp;
             light.DiffuseIntensity.Z = 1.0f * tmp;
