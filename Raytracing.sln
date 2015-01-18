@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{CA21CAB4-D5E3-4E8B-BFAF-098CE88A73C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Raytracing", "Raytracing", "{10CE0CEA-BBCB-43D0-83DF-303B2B0F292C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTools", "Auxiliary Libraries\Auxiliary Math Library\MathTools.csproj", "{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphic", "Auxiliary Libraries\Auxiliary Graphics Library\Graphic.csproj", "{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raytracing", "Auxiliary Libraries\Auxiliary Raytracing Library\Raytracing.csproj", "{A679EA16-35A2-404E-B619-0FBBA823C1E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raytracing", "Demo Suite\Raytracing  Demo\Raytracing.csproj", "{CEB23366-09B4-459C-97AB-70267F2C6B8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Texture Exporter", "Demo Suite\Texture Exporter\Texture Exporter.csproj", "{6D317EB3-A583-4DAB-A245-98DF37E75A71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A679EA16-35A2-404E-B619-0FBBA823C1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A679EA16-35A2-404E-B619-0FBBA823C1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A679EA16-35A2-404E-B619-0FBBA823C1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A679EA16-35A2-404E-B619-0FBBA823C1E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEB23366-09B4-459C-97AB-70267F2C6B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEB23366-09B4-459C-97AB-70267F2C6B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEB23366-09B4-459C-97AB-70267F2C6B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEB23366-09B4-459C-97AB-70267F2C6B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D317EB3-A583-4DAB-A245-98DF37E75A71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D317EB3-A583-4DAB-A245-98DF37E75A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D317EB3-A583-4DAB-A245-98DF37E75A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D317EB3-A583-4DAB-A245-98DF37E75A71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32BE5E1A-A16A-4AA5-ACA6-448A3C38C705} = {CA21CAB4-D5E3-4E8B-BFAF-098CE88A73C7}
+		{6B20AB31-0C91-4B2F-9F13-A8706AF3DF94} = {CA21CAB4-D5E3-4E8B-BFAF-098CE88A73C7}
+		{A679EA16-35A2-404E-B619-0FBBA823C1E3} = {CA21CAB4-D5E3-4E8B-BFAF-098CE88A73C7}
+		{CEB23366-09B4-459C-97AB-70267F2C6B8D} = {10CE0CEA-BBCB-43D0-83DF-303B2B0F292C}
+		{6D317EB3-A583-4DAB-A245-98DF37E75A71} = {10CE0CEA-BBCB-43D0-83DF-303B2B0F292C}
+	EndGlobalSection
+EndGlobal

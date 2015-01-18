@@ -1,0 +1,122 @@
+using System;
+using Tao.OpenGl;
+
+namespace Auxiliary.Graphics
+{
+	/// <summary> Двумерная текстура. </summary>
+	public class Texture1D
+	{	
+		#region Private Fields
+		
+		/// <summary> Идентификатор текстуры. </summary>
+		private int handle;
+				
+		#endregion
+		
+		#region Public Fields
+		
+		/// <summary> Ширина текстуры. </summary>
+		public int Width;
+	
+		/// <summary> Формат текселя текстуры. </summary>
+		public int TexelFormat = Gl.GL_RGBA;
+		
+		/// <summary> Внутреннее представление текселя. </summary>
+		public int InternalFormat = Gl.GL_RGBA8;
+		
+		/// <summary> Тип текстуры в OpenGL. </summary>
+		public static int Target = Gl.GL_TEXTURE_1D;
+		
+		#endregion		
+		
+		#region Constructor
+		
+		/// <summary> Создает новую текстуру по заданной ширине и высоте. </summary>
+		public Texture1D(int width)
+		{
+			Width = width;
+			
+		    unsafe
+		    {
+		    	fixed (int* pointer = &handle)
+		    	{
+		    		Gl.glGenTextures(1, new IntPtr(pointer));
+		    	}
+		    }
+		}
+		
+		/// <summary> Создает новую текстуру по заданной ширине, высоте и формату. </summary>
+		public Texture1D(int width, int texelFormat, int internalFormat)
+			: this(width)
+		{
+			TexelFormat = texelFormat;
+			InternalFormat = internalFormat;
+		}
+			
+		#endregion					
+		
+		#region Public Methods
+		
+		/// <summary> Устанавливает способ фильтрации текстуры. </summary>
+		public void SetTextureFilter(int minFilter, int magFilter)
+		{
+			Gl.glBindTexture(Target, handle);
+			
+			Gl.glTexParameteri(Target, Gl.GL_TEXTURE_MAG_FILTER, magFilter);
+			Gl.glTexParameteri(Target, Gl.GL_TEXTURE_MIN_FILTER, minFilter);			
+		}
+		
+		/// <summary> Устанавливает поведение при выходе за границы координат. </summary>
+		public void SetTextureWrap(int wrapS, int wrapT)
+		{
+			Gl.glBindTexture(Target, handle);
+			
+		    Gl.glTexParameteri(Target, Gl.GL_TEXTURE_WRAP_S, wrapS);
+		    Gl.glTexParameteri(Target, Gl.GL_TEXTURE_WRAP_T, wrapT);			
+		}		
+		
+		/// <summary> Загружает пустые текстурные данные. </summary>
+		public void UploadData()
+		{	
+			UploadData(null);
+		}			
+		
+		/// <summary> Загружает текстурные данные -- массив текселей. </summary>
+		public void UploadData(float[] pixels)
+		{				
+			Gl.glBindTexture(Target, handle);
+			
+		    Gl.glPixelStorei(Gl.GL_UNPACK_ALIGNMENT, 1);
+
+            Gl.glTexImage1D(Target, 0, InternalFormat, Width, 0, TexelFormat,
+                            Gl.GL_FLOAT, pixels);
+		}
+		
+		/// <summary> Удаляет все данные о текстуре. </summary>
+		public void UnloadData()
+		{
+		    unsafe
+		    {
+		    	fixed (int* pointer = &handle)
+		    	{
+		    		Gl.glDeleteTextures(1, new IntPtr(pointer));
+		    	}
+		    }
+		}		
+		
+		#endregion 
+		
+		#region Properties
+		
+		/// <summary> Идентификатор текстуры. </summary>
+		public int Handle
+		{
+			get
+			{
+				return handle;
+			}
+		}
+		
+		#endregion		
+	}
+}
