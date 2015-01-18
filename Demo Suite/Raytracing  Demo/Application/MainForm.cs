@@ -30,6 +30,8 @@ namespace SceneEditor
 		
 		/// <summary> Режим работы окна просмотра. </summary>
     	private ViewMode mode = ViewMode.Editor;
+
+        private Light light = null;
 		
         #endregion
         
@@ -44,7 +46,8 @@ namespace SceneEditor
 
         private void InitScene()
         {
-            OpenScene();
+            //OpenScene();
+            OpenScene("E:/GitHub/scn_main.scn");
         }        
         
         #endregion
@@ -83,85 +86,27 @@ namespace SceneEditor
 	        	
         	}
         }
-        
-        /// <summary> Сохраняет сцену в файл. </summary>
-        private void SaveScene()
+
+        private void OpenScene(string scene)
         {
-        	SaveFileDialog dialog = new SaveFileDialog();
-        	
-        	dialog.Filter = "Файлы сцен (*.scn) | *.scn";
-        	
-        	if (DialogResult.OK == dialog.ShowDialog())
-        	{        	
-	        	using (FileStream fileStream = new FileStream(dialog.FileName, FileMode.Create))
-				{
-					IFormatter formatter = new BinaryFormatter();
-					
-					try
-					{
-						formatter.Serialize(fileStream, scene);
-					}
-					catch
-					{
-						MessageBox.Show("Ошибка! Не удается сохранить сцену в файл.");
-					}
-					
-					fileStream.Close();
-	        	}
-        	}        	
-        }
-        
-        /// <summary> Загружает объект из файла. </summary>
-        private void OpenPrimitive()
-        {
-        	OpenFileDialog dialog = new OpenFileDialog();
-        	
-        	dialog.Filter = "Файлы объектов (*.prim) | *.prim";
-        	
-        	if (DialogResult.OK == dialog.ShowDialog())
-        	{
-        		using (FileStream fileStream = new FileStream(dialog.FileName, FileMode.Open))
-				{
-					IFormatter formatter = new BinaryFormatter();
-					
-					try
-					{					
-						Primitive primitive = (Primitive) formatter.Deserialize(fileStream);
-						
-						scene.Primitives.Add(primitive);
-						
-						
-					}
-					catch
-					{
-						MessageBox.Show("Ошибка! Не удается загрузить объект из файла.");
-					}
-					
-					fileStream.Close();
-        		}
-        	}
-        }
-        
-            
-        
-        /// <summary> Сохраняет сгенерированное изображение в файл. </summary>
-        private void SaveImage()
-        {
-        	if (null != raster)
-        	{
-	        	SaveFileDialog dialog = new SaveFileDialog();
-	        	
-	        	dialog.Filter = "Точечный рисунок (*.bmp) | *.bmp";
-	        	
-	        	if (DialogResult.OK == dialog.ShowDialog())
-	        	{        	
-	        		raster.ToBitmap().Save(dialog.FileName);
-	        	}
-        	}
-        	else
-        	{
-        		MessageBox.Show("Ошибка! Изображение недоступно.");
-        	}
+                using (FileStream fileStream = new FileStream(scene, FileMode.Open))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+
+                    try
+                    {
+                        this.scene = (Scene)formatter.Deserialize(fileStream);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка! Не удается загрузить сцену из файла.");
+                    }
+
+                    fileStream.Close();
+
+                    light = this.scene.Lights[0];
+                }
+
         }
         
         #endregion
@@ -298,6 +243,8 @@ namespace SceneEditor
         	InitCamera();
         	
         	SwitchMode(ViewMode.Editor);
+
+            backgroundWorker.RunWorkerAsync();
         }
 
        
@@ -311,23 +258,6 @@ namespace SceneEditor
         
         #region Настройка визуализации
         
-        private void ButtonAxesCheckedChanged(object sender, EventArgs e)
-        {
-        	scene.Axes.Visible = buttonAxes.Checked;
-        }
-        
-        private void ButtonVolumeCheckedChanged(object sender, EventArgs e)
-        {
-        	scene.Volume.Visible = buttonVolume.Checked;
-        }        
-        
-        private void ButtonCameraClick(object sender, EventArgs e)
-        {
-        	InitCamera();
-        } 
-        
-      
-        
         #endregion
         
         #region Визуализация сцены
@@ -336,38 +266,11 @@ namespace SceneEditor
         {
         	DrawScene();
         }
-        
-        private void PanelOpenGLKeyDown(object sender, KeyEventArgs e)
-        {
-        	keyboard.OnKeyDown(e);
-        }
-        
-        private void PanelOpenGLKeyUp(object sender, KeyEventArgs e)
-        {
-        	keyboard.OnKeyUp(e);
-        }
-        
-        private void PanelOpenGLMouseDown(object sender, MouseEventArgs e)
-        {
-        	mouse.OnMouseDown(e);
-        	
-        	labelMouseActive.Visible = mouse.Active;
-        }
-        
-        private void PanelOpenGLMouseMove(object sender, MouseEventArgs e)
-        {
-        	mouse.OnMouseMove(e);
-        }
 
-        private void MenuItemEditorClick(object sender, EventArgs e)
+        private void buttonStart_Click(object sender, EventArgs e)
         {
-        	SwitchMode(ViewMode.Editor);
-        }        
-        
-        private void MenuItemRenderClick(object sender, EventArgs e)
-        {
-        	backgroundWorker.RunWorkerAsync();	        	
-        }        
+            backgroundWorker.RunWorkerAsync();	 
+        }
 
         private void BackgroundWorkerDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
@@ -413,35 +316,13 @@ namespace SceneEditor
         #endregion
         
         #region Сохранение и загрузка сцены и отдельных объектов
-        
-        private void ButtonOpenPrimitiveClick(object sender, EventArgs e)
-        {
-        	OpenPrimitive();
-        }
-        
-      
+       
         
         private void MenuItemOpenSceneClick(object sender, EventArgs e)
         {
         	OpenScene();
         }
-        
-        private void MenuItemOpenPrimitiveClick(object sender, EventArgs e)
-        {
-        	OpenPrimitive();
-        }
        
-        
-        private void MenuItemSaveSceneClick(object sender, EventArgs e)
-        {
-        	SaveScene();
-        }
-        
-       
-        private void MenuItemSaveImageClick(object sender, EventArgs e)
-        {
-        	SaveImage();
-        }        
         
         #endregion
 
