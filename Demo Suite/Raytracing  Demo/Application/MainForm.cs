@@ -31,6 +31,7 @@ namespace SceneEditor
 		/// <summary> Режим работы окна просмотра. </summary>
     	private ViewMode mode = ViewMode.Editor;
 
+        /// <summary> Источник света. </summary>
         private Light light = null;
 		
         #endregion
@@ -46,15 +47,12 @@ namespace SceneEditor
 
         private void InitScene()
         {
-            //OpenScene();
             OpenScene("E:/GitHub/scn_main.scn");
         }        
         
         #endregion
         
-        #region Private Methods
-        
-        
+        #region Private Methods    
         
         #region Сохранение и загрузка сцены и отдельных объектов
         
@@ -87,9 +85,10 @@ namespace SceneEditor
         	}
         }
 
-        private void OpenScene(string scene)
+        /// <summary> Загружает сцену из файла. </summary>
+        private void OpenScene(string path)
         {
-                using (FileStream fileStream = new FileStream(scene, FileMode.Open))
+                using (FileStream fileStream = new FileStream(path, FileMode.Open))
                 {
                     IFormatter formatter = new BinaryFormatter();
 
@@ -126,9 +125,9 @@ namespace SceneEditor
         /// <summary> Устанавлиает положение и ориентацию камеры по умолчанию. </summary>
         private void InitCamera()
         {
-        	scene.Camera.Position = new Vector3D(29.0f, 11.0f, 11.0f);
+        	scene.Camera.Position = new Vector3D(35.0f, 15.0f, 11.0f);
         	
-        	scene.Camera.Orientation = new Vector3D(0.0f, 0.36f, -0.38f);       	
+        	scene.Camera.Orientation = new Vector3D(0.0f, 0.32f, -0.32f);       	
         }
         
         /// <summary> Перключает режимы 'редактирование сцены / просмотр результата'. </summary>
@@ -188,11 +187,7 @@ namespace SceneEditor
         {        	
         	if (ViewMode.Editor == mode)
         	{
-	        	Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
-	        	
-	        	mouse.Apply(scene.Camera);
-	        	
-	        	keyboard.Apply(scene.Camera);        	            
+	        	Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);    	            
 	        	            
 	        	scene.Camera.Setup();
 	        	
