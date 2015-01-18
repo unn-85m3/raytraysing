@@ -107,6 +107,7 @@ namespace SceneEditor
 
                     fileStream.Close();
 
+                    this.scene.Volume.Visible = false;
                     this.scene.Axes.Visible = false;
 
                     backSquare = this.scene.Primitives[0];
@@ -288,18 +289,12 @@ namespace SceneEditor
         private void trackBarReflectivity_Scroll(object sender, EventArgs e)
         {
             float tmp = (1.0f / trackBarReflectivity.Maximum) * Convert.ToSingle(trackBarReflectivity.Value);
-            backSquare.Material.RefractCoeff.X = 0.2f * tmp;
             backSquare.Material.ReflectCoeff.X = 0.2f * tmp;
-            backSquare.Material.RefractCoeff.Y = 0.2f * tmp;
             backSquare.Material.ReflectCoeff.Y = 0.2f * tmp;
-            backSquare.Material.RefractCoeff.Z = 0.2f * tmp;
             backSquare.Material.ReflectCoeff.Z = 0.2f * tmp;
 
-            leftSquare.Material.RefractCoeff.X = 0.2f * tmp;
             leftSquare.Material.ReflectCoeff.X = 0.2f * tmp;
-            leftSquare.Material.RefractCoeff.Y = 0.2f * tmp;
             leftSquare.Material.ReflectCoeff.Y = 0.2f * tmp;
-            leftSquare.Material.RefractCoeff.Z = 0.2f * tmp;
             leftSquare.Material.ReflectCoeff.Z = 0.2f * tmp;
 
         }
