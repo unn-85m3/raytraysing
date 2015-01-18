@@ -87,7 +87,6 @@
             this.panelOpenGL.Size = new System.Drawing.Size(512, 537);
             this.panelOpenGL.StencilBits = ((byte)(0));
             this.panelOpenGL.TabIndex = 8;
-            this.panelOpenGL.Load += new System.EventHandler(this.panelOpenGL_Load);
             this.panelOpenGL.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelOpenGLPaint);
             // 
             // timer
@@ -160,22 +159,24 @@
             // trackBarLight
             // 
             this.trackBarLight.Location = new System.Drawing.Point(529, 39);
-            this.trackBarLight.Maximum = 1;
+            this.trackBarLight.Maximum = 100;
             this.trackBarLight.Name = "trackBarLight";
             this.trackBarLight.Size = new System.Drawing.Size(91, 45);
             this.trackBarLight.TabIndex = 9;
             this.trackBarLight.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarLight.Value = 1;
+            this.trackBarLight.Value = 100;
+            this.trackBarLight.Scroll += new System.EventHandler(this.trackBarLight_Scroll);
             // 
             // trackBarReflectivity
             // 
             this.trackBarReflectivity.Location = new System.Drawing.Point(529, 90);
-            this.trackBarReflectivity.Maximum = 1;
+            this.trackBarReflectivity.Maximum = 100;
             this.trackBarReflectivity.Name = "trackBarReflectivity";
             this.trackBarReflectivity.Size = new System.Drawing.Size(91, 45);
             this.trackBarReflectivity.TabIndex = 14;
             this.trackBarReflectivity.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarReflectivity.Value = 1;
+            this.trackBarReflectivity.Value = 100;
+            this.trackBarReflectivity.Scroll += new System.EventHandler(this.trackBarReflectivity_Scroll);
             // 
             // label1
             // 

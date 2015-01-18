@@ -33,6 +33,10 @@ namespace SceneEditor
 
         /// <summary> Источник света. </summary>
         private Light light = null;
+
+        /// <summary> Стенки. </summary>
+        private Auxiliary.Raytracing.Primitive backSquare = null;
+        private Auxiliary.Raytracing.Primitive leftSquare = null;
 		
         #endregion
         
@@ -103,7 +107,26 @@ namespace SceneEditor
 
                     fileStream.Close();
 
+                    this.scene.Axes.Visible = false;
+
+                    backSquare = this.scene.Primitives[0];
+                    leftSquare = this.scene.Primitives[1];
+
                     light = this.scene.Lights[0];
+
+
+                    this.scene.Lights[1].AmbiantIntensity.X = 0f;
+                    this.scene.Lights[1].AmbiantIntensity.Y = 0f;
+                    this.scene.Lights[1].AmbiantIntensity.Z = 0f;
+                    this.scene.Lights[1].DiffuseIntensity.X = 0f;
+                    this.scene.Lights[1].DiffuseIntensity.Y = 0f;
+                    this.scene.Lights[1].DiffuseIntensity.Z = 0f; 
+                    this.scene.Lights[1].SpecularIntensity.X = 0f;
+                    this.scene.Lights[1].SpecularIntensity.Y = 0f;
+                    this.scene.Lights[1].SpecularIntensity.Z = 0f;
+
+
+                    buttonStart.Enabled = false;
                 }
 
         }
@@ -184,7 +207,7 @@ namespace SceneEditor
         
         /// <summary> Отрисовывает сцену в выбранном режиме. </summary>
         private void DrawScene()
-        {        	
+        {
         	if (ViewMode.Editor == mode)
         	{
 	        	Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);    	            
@@ -259,12 +282,49 @@ namespace SceneEditor
         
         private void PanelOpenGLPaint(object sender, PaintEventArgs e)
         {
-        	DrawScene();
+            DrawScene();
+        } 
+
+        private void trackBarReflectivity_Scroll(object sender, EventArgs e)
+        {
+            float tmp = (1.0f / trackBarReflectivity.Maximum) * Convert.ToSingle(trackBarReflectivity.Value);
+            backSquare.Material.RefractCoeff.X = 0.2f * tmp;
+            backSquare.Material.ReflectCoeff.X = 0.2f * tmp;
+            backSquare.Material.RefractCoeff.Y = 0.2f * tmp;
+            backSquare.Material.ReflectCoeff.Y = 0.2f * tmp;
+            backSquare.Material.RefractCoeff.Z = 0.2f * tmp;
+            backSquare.Material.ReflectCoeff.Z = 0.2f * tmp;
+
+            leftSquare.Material.RefractCoeff.X = 0.2f * tmp;
+            leftSquare.Material.ReflectCoeff.X = 0.2f * tmp;
+            leftSquare.Material.RefractCoeff.Y = 0.2f * tmp;
+            leftSquare.Material.ReflectCoeff.Y = 0.2f * tmp;
+            leftSquare.Material.RefractCoeff.Z = 0.2f * tmp;
+            leftSquare.Material.ReflectCoeff.Z = 0.2f * tmp;
+
+        }
+
+        private void trackBarLight_Scroll(object sender, EventArgs e)
+        {
+            float tmp = (1.0f / trackBarLight.Maximum) * Convert.ToSingle(trackBarLight.Value);
+            light.AmbiantIntensity.X = 0.2f * tmp;
+            light.AmbiantIntensity.Y = 0.2f * tmp;
+            light.AmbiantIntensity.Z = 0.2f * tmp;
+            light.DiffuseIntensity.X = 1.0f * tmp;
+            light.DiffuseIntensity.Y = 1.0f * tmp;
+            light.DiffuseIntensity.Z = 1.0f * tmp;
+            light.SpecularIntensity.X = 0.3f * tmp;
+            light.SpecularIntensity.Y = 0.3f * tmp;
+            light.SpecularIntensity.Z = 0.3f * tmp;
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            backgroundWorker.RunWorkerAsync();	 
+            scene.Lights[0] = light;
+            scene.Primitives[0] = backSquare;
+            scene.Primitives[1] = leftSquare;
+            backgroundWorker.RunWorkerAsync();
+            buttonStart.Enabled = false;
         }
 
         private void BackgroundWorkerDoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -288,6 +348,8 @@ namespace SceneEditor
         	Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Handle);
         	
         	SwitchMode(ViewMode.Result);
+
+            buttonStart.Enabled = true;
         }
         
         private void TimerTick(object sender, EventArgs e)
@@ -310,23 +372,8 @@ namespace SceneEditor
         
         #endregion
         
-        #region Сохранение и загрузка сцены и отдельных объектов
-       
-        
-        private void MenuItemOpenSceneClick(object sender, EventArgs e)
-        {
-        	OpenScene();
-        }
-       
-        
-        #endregion
+        #endregion      
 
-        private void panelOpenGL_Load(object sender, EventArgs e)
-        {
-
-        }
-        
-        #endregion       
 
        
     }
